@@ -52,13 +52,15 @@ public class Game {
 		//Revisamos el numero de bolas que tenemos.
 		do {
 			
-			totalPoints = shotBall(userScore);
+			totalPoints += shotBall(userScore);
 			nTry--;
 				
 		} while (nTry>0);
-		UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.center(InterfaceConstants.GAME_OVER, UserInterface.consoleWidth));
-		UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.center(UserInterface.toStrBuilder(InterfaceConstants.SCORE_MSG, String.valueOf(totalPoints), "pts.") , UserInterface.consoleWidth));
+		
+		UserInterface.addScorePlayer(totalPoints, scoreBoard);
 	}
+
+	
 
 	/**
 	 * Method that recreate the launch of the ball
@@ -68,6 +70,8 @@ public class Game {
 	private static int shotBall(ScoreKeeper userScore) {
 		
 		boolean isShooted = UserInterface.shotInput();
+		Ball.setFallOff(Boolean.FALSE);
+		
 		if(isShooted) {
 						
 			Ball ball = new Ball();
@@ -80,15 +84,15 @@ public class Game {
 				//Turno de la bola
 				//Rebota n veces al comienzo del turno
 				int rand = r.nextInt(10);
-				repeatBounce(ball, rand);
+				repeatBounce(ball, userScore, rand);
 				
 				//Luego puede volver a rebotar u otras de las opciones
 				rand = r.nextInt(100);
-				if(rand <=65) {
+				if(rand <=75) {
 					fallInBouncer(ball, userScore);
-				} else if (rand <=75) {
+				} else if (rand <=85) {
 					holeCounter = fallInHole(ball, userScore, holeCounter);
-				} else if (rand <=90) {
+				} else if (rand <=95) {
 					rampCounter = enterRamp(ball, userScore, rampCounter);
 				} else {
 					fallOffBall(userScore);
@@ -123,54 +127,89 @@ public class Game {
 	 * @param ball
 	 * @param times
 	 */
-	private static void repeatBounce(Ball ball, int times) {
+	private static void repeatBounce(Ball ball, ScoreKeeper userScore, int times) {
 		for(int i = 0; i<times; i++) {
+			System.out.println();
 			ball.bounce();
+			if(ball.isBonus()) {
+				userScore.incrementScore (150*userScore.getStreak());
+			} else {
+				userScore.incrementScore (100*userScore.getStreak());
+			}
 		}
 	}
 
+	/**
+	 * Method with the logic when you fall in a bouncer
+	 * 
+	 * @param ball
+	 * @param userScore
+	 */
 	private static void fallInBouncer(Ball ball, ScoreKeeper userScore) {
 		
 		ball.bounce();
 		if(ball.isBonus()) {
-			userScore.incrementScore (15*userScore.getStreak());
+			userScore.incrementScore (150*userScore.getStreak());
 		} else {
-			userScore.incrementScore (5*userScore.getStreak());
+			userScore.incrementScore (100*userScore.getStreak());
 		}
 	}
 	
+	/**
+	 * Method with the logic when you fall in a hole
+	 * 
+	 * @param ball
+	 * @param userScore
+	 * @param holeCounter
+	 * @return
+	 */
 	private static int fallInHole(Ball ball, ScoreKeeper userScore, int holeCounter) {
 		ball.hole();
 		
 		if(ball.isBonus()) {
-			userScore.incrementScore (15*userScore.getStreak());
+			userScore.incrementScore (350*userScore.getStreak());
+			UserInterface.multiplyText(2, "\n");
+			UserInterface.showImage(InterfaceConstants.TREASURE, InterfaceConstants.HIGH_SPEED);
 		} else {
-			userScore.incrementScore (5*userScore.getStreak());
+			userScore.incrementScore (150*userScore.getStreak());
 			userScore.incrementStreak();
 		}
 		holeCounter++;
 		return holeCounter;
 	}
 	
+	/**
+	 * Method with the logic when you enter in the ramp
+	 * 
+	 * @param ball
+	 * @param userScore
+	 * @param rampCounter
+	 * @return
+	 */
 	private static int enterRamp(Ball ball, ScoreKeeper userScore, int rampCounter) {
 		ball.ramp();
 		
 		if(ball.isBonus()) {
-			userScore.incrementScore (35*userScore.getStreak());
+			userScore.incrementScore (500*userScore.getStreak());
 		} else {
-			userScore.incrementScore(20);
+			userScore.incrementScore(200);
 		}
 		rampCounter++;
 		return rampCounter;
 	}
 	
+	/**
+	 * Method with the logic when you fail hit the ball
+	 * 
+	 * @param userScore
+	 */
 	private static void fallOffBall(ScoreKeeper userScore) {
 		Ball.fallOff();
 		userScore.resetStreak();
 		if(userScore.getAnchor() > 1) {
 			nTry++;
 			userScore.decreaseAnchor();
-			UserInterface.typeWriteText(InterfaceConstants.MSG_SPEED, (StringUtils.center(UserInterface.toStrBuilder("You have ", String.valueOf(userScore.getAnchor()), " now. Watch out for the sea!"), UserInterface.consoleWidth)));
+			UserInterface.typeWriteText(InterfaceConstants.HIGH_SPEED, (StringUtils.center(UserInterface.toStrBuilder("You have ", String.valueOf(userScore.getAnchor()), " now. Watch out for the sea!"), UserInterface.consoleWidth)));
 		}
 	}
 	

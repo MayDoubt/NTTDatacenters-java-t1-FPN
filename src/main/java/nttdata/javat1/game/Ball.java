@@ -33,6 +33,10 @@ public class Ball {
 		return isFallOff;
 	} 
 	
+	public static void setFallOff(boolean state) {
+		Ball.isFallOff = state;
+	} 
+	
 	/**
 	 * @return isBonus  Returns true if you are in bonus, that means you have managed to hit the ball in 5 holes without it falling out
 	 */
@@ -57,15 +61,15 @@ public class Ball {
 		switch(rand) {
 			case 1:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.BOUNCE_SOUNDS[rand]), UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.BOUNCE_SOUNDS[rand]), UserInterface.consoleWidth));
 				break;	
 			case 2:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.center(InterfaceConstants.BOUNCE_SOUNDS[rand], UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.center(InterfaceConstants.BOUNCE_SOUNDS[rand], UserInterface.consoleWidth));
 				break;	
 			default:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.right(InterfaceConstants.BOUNCE_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.right(InterfaceConstants.BOUNCE_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
 				break;	
 				
 		}
@@ -79,22 +83,23 @@ public class Ball {
 		int soundListLength = InterfaceConstants.HOLE_SOUNDS.length;
 		int rand = r.nextInt(holeListLength);
 		
+		System.out.println(UserInterface.multiplyText(2, "\n"));
+		UserInterface.typeWriteText(InterfaceConstants.HIGH_SPEED, (StringUtils.center(InterfaceConstants.HOLE_MSG[rand], UserInterface.consoleWidth)));
 		System.out.println();
-		UserInterface.typeWriteText(InterfaceConstants.MSG_SPEED, (StringUtils.center(InterfaceConstants.HOLE_MSG[rand], UserInterface.consoleWidth)));
 		
 		rand = r.nextInt(3);
 		switch(rand) {
 			case 1:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.HOLE_SOUNDS[rand]), UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.HOLE_SOUNDS[rand]), UserInterface.consoleWidth));
 				break;
 			case 2:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.center(InterfaceConstants.HOLE_SOUNDS[rand], UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.center(InterfaceConstants.HOLE_SOUNDS[rand], UserInterface.consoleWidth));
 				break;
 			default:
 				rand = r.nextInt(soundListLength);
-				UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.right(InterfaceConstants.HOLE_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
+				UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.right(InterfaceConstants.HOLE_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
 				break;
 		}
 	}
@@ -105,22 +110,23 @@ public class Ball {
 	public void ramp() {
 		int soundListLength = InterfaceConstants.RAMP_SOUNDS.length;
 		
+		System.out.println(UserInterface.multiplyText(2, "\n"));
+		UserInterface.typeWriteText(InterfaceConstants.HIGH_SPEED, (StringUtils.center(InterfaceConstants.RAMP_MSG, UserInterface.consoleWidth)));
 		System.out.println();
-		UserInterface.typeWriteText(InterfaceConstants.MSG_SPEED, (StringUtils.center(InterfaceConstants.RAMP_MSG, UserInterface.consoleWidth)));
 		
 		int rand = r.nextInt(3);
 		switch(rand) {
 		case 1:
 			rand = r.nextInt(soundListLength);
-			UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.RAMP_SOUNDS[rand]), UserInterface.consoleWidth));
+			UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.left(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN).concat(InterfaceConstants.RAMP_SOUNDS[rand]), UserInterface.consoleWidth));
 			break;
 		case 2:
 			rand = r.nextInt(soundListLength);
-			UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.center(InterfaceConstants.RAMP_SOUNDS[rand], UserInterface.consoleWidth));
+			UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.center(InterfaceConstants.RAMP_SOUNDS[rand], UserInterface.consoleWidth));
 			break;
 		default:
 			rand = r.nextInt(soundListLength);
-			UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED, StringUtils.right(InterfaceConstants.RAMP_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
+			UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED, StringUtils.right(InterfaceConstants.RAMP_SOUNDS[rand].concat(UserInterface.multiplyText(UserInterface.blankMultiplier, InterfaceConstants.MARGIN)), UserInterface.consoleWidth));
 			break;
 			
 		}
@@ -131,13 +137,14 @@ public class Ball {
 	 */
 	public static void fallOff() {
 			
+		System.out.println(UserInterface.multiplyText(2, "\n"));
+		UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED,StringUtils.center("poof", UserInterface.consoleWidth));
 		System.out.println();
-		UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED,StringUtils.center("poof", UserInterface.consoleWidth));
-		UserInterface.typeWriteText(InterfaceConstants.TEXT_SPEED,StringUtils.center(InterfaceConstants.BALL_FALLOFF, UserInterface.consoleWidth));
+		UserInterface.typeWriteText(InterfaceConstants.MEDIUM_SPEED,StringUtils.center(InterfaceConstants.BALL_FALLOFF, UserInterface.consoleWidth));
+		System.out.println();
 
 		isBonus = Boolean.FALSE;
 		isFallOff = Boolean.TRUE;
-		Game.nTry++;
 
 	}
 }
